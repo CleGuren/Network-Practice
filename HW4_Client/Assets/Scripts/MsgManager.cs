@@ -18,6 +18,8 @@ public class MsgManager : MonoBehaviour
         inputBox = GameObject.Find("InputField").GetComponent<InputField>();
         chatPanel = GameObject.Find("Content");
         networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
+        MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
+        msgQueue.AddCallback(Constants.SMSG_CHAT, OnResponseChat);
     }
 
     void Update()
@@ -48,6 +50,18 @@ public class MsgManager : MonoBehaviour
         newMessage.textObject.text = newMessage.msg;
 
         messageList.Add(newMessage);
+    }
+
+    public void OnResponseChat(ExtendedEventArgs eventArgs) {
+        ResponseMsgEventArgs args = eventArgs as ResponseMsgEventArgs;
+        if (args.user_id == Constants.OP_ID) {
+            string message = args.chatMessage;
+            SendMessageToChat(message);
+        } else if (args.user_id == Constants.USER_ID) {
+            //Ignore
+        } else {
+            Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
+        }
     }
 }
 

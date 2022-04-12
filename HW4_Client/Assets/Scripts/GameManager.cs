@@ -264,16 +264,3 @@ public class GameManager : MonoBehaviour
 	}
 }
 
-// [System.Serializable]
-// public class Message {
-//     public string msg;
-//     public Text textObject;
-
-//     public Message() {
-        
-//     }
-
-//     public Message(string text) {
-//         this.msg = text;
-//     }
-// }
