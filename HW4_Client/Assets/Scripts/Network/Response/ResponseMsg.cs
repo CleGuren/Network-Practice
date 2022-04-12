@@ -9,7 +9,7 @@ public class ResponseMsgEventArgs : ExtendedEventArgs
 
 	public ResponseMsgEventArgs()
 	{
-		event_id = Constants.CMSG_CHAT;
+		event_id = Constants.SMSG_CHAT;
 	}
 }
 

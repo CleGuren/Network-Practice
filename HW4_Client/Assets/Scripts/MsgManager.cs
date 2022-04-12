@@ -9,7 +9,8 @@ public class MsgManager : MonoBehaviour
     private int maxMessage = 25;
     private GameObject chatPanel;
     private InputField inputBox;
-    private List<Message> messageList;
+    [SerializeField]
+    List<Message> messageList;
     private NetworkManager networkManager;
     
     void Start()
@@ -27,6 +28,7 @@ public class MsgManager : MonoBehaviour
         if (inputBox.text != "") {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 SendMessageToChat(inputBox.text);
+                networkManager.SendChatMessageRequest(inputBox.text);
                 inputBox.text = "";
             }
         } else {
@@ -55,8 +57,8 @@ public class MsgManager : MonoBehaviour
     public void OnResponseChat(ExtendedEventArgs eventArgs) {
         ResponseMsgEventArgs args = eventArgs as ResponseMsgEventArgs;
         if (args.user_id == Constants.OP_ID) {
-            string message = args.chatMessage;
-            SendMessageToChat(message);
+            Debug.Log("message is: " + args.chatMessage);
+            SendMessageToChat(args.chatMessage);
         } else if (args.user_id == Constants.USER_ID) {
             //Ignore
         } else {
